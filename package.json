@@ -1,0 +1,30 @@
+{
+  "name": "tencent-upbossdata",
+  "version": "0.0.1",
+  "description": "封装上报方法，方便开发者调用",
+  "main": "dist/bundle.js",
+  "keywords": ["腾讯", "上传统计信息"],
+  "repository": "https://github.com/wenzi0github/tencent-updata.git",
+  "files": [
+    "src",
+    "dist/bundle.js"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wbuild": "webpack --mode development --progress --display-modules --colors --display-reasons",
+    "build": "rollup -c"
+  },
+  "author": "wenzi",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "rollup-plugin-babel": "^3.0.5",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8"
+  }
+}
