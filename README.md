@@ -27,6 +27,8 @@ wzp.send({act: 'PV'})
 
 上面的代码基本上展示出所有的功能了。
 
+> 注意： 在当前模块中，是创建一个img图片，通过请求img图片的链接，来上报PV请求等。请在使用时修改为您自己的上报地址，修改方法在文章的最后有说明。
+
 ### 初始化  
 
 可以把经常要上报的字段或者数据不需要变动的字段，在初始化时就传入进去。这样在后续上报行为中，都会带上这些字段。
@@ -87,11 +89,29 @@ wzp.send({page: 'main'}); // 当前请求中不存在act字段
 
 ### sendData
 
-最终的数据上报请求是通过这个方法发送的，我们也可以修改这个`sendData`方法，来修改数据上报的方式。不过记得在`send()`发送请求之前进行修改：
+最终的数据上报请求是通过这个方法发送的，我们也可以修改这个`sendData`方法，来修改数据上报的方式。
+
+不过记得在`send()`发送请求之前进行修改：
 
 ```javascript
+/**
+ * @param data {key1: value1, key2: value2, key3: value3} 上报的字段与对应的数据
+ */
 wzp.sendData = function(data){
-    console.log(data);
-    // ajax(data);
+    let s = '',
+        item;
+        
+    for(let key in data){
+        item = data[key];
+        if( typeof item==='object' ){
+            // 若上传的数据为array或者json格式的，则转换为字符串
+            item = JSON.stringify(item);
+        }
+
+        s += '&' + key + '=' + encodeURIComponent( data[key] );
+    }
+
+    let img = new Image(1, 1);
+    img.src = 'xxxx.com/updata?v=1'+s+'&_t='+Math.random();
 }
 ```

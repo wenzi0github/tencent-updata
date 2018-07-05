@@ -41,7 +41,7 @@ wzPing.prototype.ready = function(params){
             fn(argv=>{
                 for(let k in argv){
                     if( argv[k] ){
-                        this.data[k] = encodeURIComponent( argv[k] );
+                        this.data[k] = argv[k];
                     }
                 }
                 resolve( this.data );
@@ -69,22 +69,31 @@ wzPing.prototype.send = function(params){
     let data = Object.assign({}, this.data, params);
     
     if( this.readyWait==0 ){
+        // 若ready执行完毕，则开始上传数据
         this.sendData(data);
     }else{
+        // 若还有ready没有执行完毕，则先将请求存起来，等待上报
         pubsub.subscribe( data );
     }
 };
 
 wzPing.prototype.sendData = function(data){
-    var s = '';
+    let s = '',
+        item;
         
-    for(var key in data){
-        s += '&'+key+'='+data[key];
+    for(let key in data){
+        item = data[key];
+        if( typeof item==='object' ){
+            // 若上传的数据为array或者json格式的，则转换为字符串
+            item = JSON.stringify(item);
+        }
+
+        s += '&' + key + '=' + encodeURIComponent( data[key] );
     }
 
-    var protocol = window.location.protocol=='https:' ? window.location.protocol : 'http:';
-    var iurl = protocol+'//btrace.qq.com/kvcollect?v=1'+s+'&_dc='+ Math.random();
-    var gImage = new Image(1,1);
+    let protocol = window.location.protocol=='https:' ? window.location.protocol : 'http:';
+    let iurl = protocol+'//btrace.qq.com/kvcollect?v=1'+s+'&_dc='+ Math.random();
+    let gImage = new Image(1,1);
     gImage.src = iurl;
 }
 

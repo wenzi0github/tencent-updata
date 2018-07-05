@@ -1,6 +1,6 @@
 {
-  "name": "tencent-upbossdata",
-  "version": "0.0.1",
+  "name": "tencent-updata",
+  "version": "0.0.3",
   "description": "封装上报方法，方便开发者调用",
   "main": "dist/bundle.js",
   "keywords": ["腾讯", "上传统计信息"],

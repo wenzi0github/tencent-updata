@@ -1,4 +1,4 @@
-import wzPing from '../dist/bundle';
+import wzPing from 'tencent-updata';
 
 var wzp = new wzPing({
     user: 123456,
